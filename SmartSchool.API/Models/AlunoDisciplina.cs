@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SmartSchool.API.Models
@@ -20,6 +21,7 @@ namespace SmartSchool.API.Models
 
         public int AlunoId { get; set; }
 
+        //[JsonIgnore]
         public Aluno Aluno { get; set; }
 
         public int DisciplinaId { get; set; }
