@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace SmartSchool.API
 {
@@ -32,24 +33,19 @@ namespace SmartSchool.API
         {
             services.AddDbContext<SmartContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))    
-            );            
+            );         
 
-            services.AddScoped<IRepository, Repository>();
-
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromMinutes(20);
-            //    options.Cookie.HttpOnly = true;
-            //    options.Cookie.IsEssential = true;
-            //});
-
+            
             services.AddDistributedMemoryCache();
 
             services.AddControllers()
                 .AddNewtonsoftJson(
                 opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-                //.AddNew(
-                //options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IRepository, Repository>();
+
 
             services.AddSwaggerGen(c =>
             {

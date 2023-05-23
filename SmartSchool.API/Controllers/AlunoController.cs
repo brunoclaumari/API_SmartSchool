@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SmartSchool.API.Data;
+using SmartSchool.API.DTOS;
+using SmartSchool.API.Helpers;
 using SmartSchool.API.Models;
 using System;
 using System.Collections.Generic;
@@ -20,21 +23,29 @@ namespace SmartSchool.API.Controllers
 
         private const string Alunos = "Alunos";        
         private readonly IRepository _repo;
+        private readonly IMapper _mapper;
 
-        public AlunoController(IRepository repo)
+        public AlunoController(IRepository repo, IMapper mapper)
         {            
             _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/<AlunoController>
         [HttpGet]
         public IActionResult Get()
-        {
-            //var lista = _smartContext.Alunos;
-            var lista = _repo.GetAllAlunos(true);
-            
+        {            
+            var listaAlunos = _repo.GetAllAlunos(true);            
 
-            return Ok(lista);
+            var enumerableRetorno = _mapper.Map<IEnumerable<AlunoDTO>>(listaAlunos);
+
+            return Ok(enumerableRetorno);
+        }
+
+        [HttpGet("teste")]
+        public IActionResult GetTeste()
+        {   
+            return Ok(new AlunoRegistrarDTO());
         }
 
         // GET api/<AlunoController>/5
@@ -46,52 +57,55 @@ namespace SmartSchool.API.Controllers
             Aluno aluno = _repo.GetAlunoById(id, true);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
+            var alunoDTO = _mapper.Map<AlunoDTO>(aluno);
 
-            return Ok(aluno);
+            return Ok(alunoDTO);
         }
         
 
         // POST api/<AlunoController>
         [HttpPost]
-        public IActionResult Post([FromBody] Aluno value)
+        public IActionResult Post([FromBody] AlunoRegistrarDTO model)
         {
-            _repo.Add(value);
+            Aluno aluno = _mapper.Map<Aluno>(model);
+
+            _repo.Add(aluno);
             if (_repo.SaveChanges())
-                return CreatedAtAction("Post", value);
+                return Created($"/api/aluno/{aluno.Id}", _mapper.Map<AlunoDTO>(aluno));
             else
                 return BadRequest("Falha ao salvar Aluno.");
         }
 
         // PUT api/<AlunoController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Aluno value)
-        {
-            //Aluno aluno = _smartContext.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+        public IActionResult Put(int id, [FromBody] AlunoRegistrarDTO model)
+        {            
             Aluno aluno = _repo.GetAlunoById(id);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
-            value.Id = aluno.Id;
-            _repo.Update(value);
+            //value.Id = aluno.Id;
+            _mapper.Map(model, aluno);
+            _repo.Update(aluno);
 
             if (_repo.SaveChanges())
-                return Ok(value);
+                return Ok(_mapper.Map<AlunoDTO>(aluno));
             else
                 return BadRequest($"Falha na atualização do Aluno id: {id}");
         }
 
         // PATCH api/<AlunoController>/5
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, [FromBody] Aluno value)
-        {
-            //Aluno aluno = _smartContext.Alunos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+        public IActionResult Patch(int id, [FromBody] AlunoRegistrarDTO model)
+        {            
             Aluno aluno = _repo.GetAlunoById(id);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
-            value.Id = aluno.Id;
-            _repo.Update(value);
+            //value.Id = aluno.Id;
+            _mapper.Map(model, aluno);
+            _repo.Update(aluno);
 
             if (_repo.SaveChanges())
-                return Ok(value);
+                return Ok(_mapper.Map<AlunoDTO>(aluno));
             else
                 return BadRequest($"Falha na atualização do Aluno id: {id}");
         }
