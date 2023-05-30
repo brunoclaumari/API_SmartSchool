@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.API.Data;
-using SmartSchool.API.DTOS;
+using SmartSchool.API.V1.DTOS;
 using SmartSchool.API.Models;
 using System;
 using System.Collections.Generic;
@@ -11,27 +11,44 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V1.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Controller para entidade Professor versão 1.0
+    /// </summary>
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ProfessorController : ControllerBase
     {        
         private readonly IRepository _repo;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
         public ProfessorController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Retorna ProfessorRegistrarDTO apenas para teste
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("teste")]
         public IActionResult GetTeste()
         {
             return Ok(new ProfessorRegistrarDTO());
         }
 
+        /// <summary>
+        /// Método que retorna todos os Professores
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<ProfessorController>
         [HttpGet]
         public IActionResult Get()
@@ -42,6 +59,11 @@ namespace SmartSchool.API.Controllers
             return Ok(profDTO);
         }
 
+        /// <summary>
+        /// Método que retorna um Professor por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET api/<ProfessorController>/5
         [HttpGet("byId/{id}")]
         public IActionResult GetById(int id)
@@ -63,6 +85,11 @@ namespace SmartSchool.API.Controllers
         //    return Ok(prof);
         //}
 
+        /// <summary>
+        /// Método para cadastrar um novo Professor
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST api/<ProfessorController>
         [HttpPost]
         public IActionResult Post([FromBody] ProfessorRegistrarDTO model)
@@ -76,6 +103,12 @@ namespace SmartSchool.API.Controllers
                 return BadRequest("Ocorreu um erro ao inserir o Professor");
         }
 
+        /// <summary>
+        /// Método que atualiza um Professor (obrigatório todos os atributos de Professor)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // PUT api/<ProfessorController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ProfessorRegistrarDTO model)
@@ -92,6 +125,12 @@ namespace SmartSchool.API.Controllers
             
         }
 
+        /// <summary>
+        /// Método que atualiza um Professor (não precisa de todos os atributos de Professor)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // PATCH api/<AlunoController>/5
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, [FromBody] ProfessorRegistrarDTO model)
@@ -107,6 +146,11 @@ namespace SmartSchool.API.Controllers
                 return BadRequest("Ocorreu um erro ao atualizar o Professor");
         }
 
+        /// <summary>
+        /// Deleta um Professor pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE api/<ProfessorController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

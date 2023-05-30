@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmartSchool.API.DTOS
+namespace SmartSchool.API.V1.DTOS
 {
     public class AlunoDTO
     {

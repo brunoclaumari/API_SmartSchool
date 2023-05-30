@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
-using SmartSchool.API.DTOS;
+using SmartSchool.API.V1.DTOS;
 using SmartSchool.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartSchool.API.Helpers;
 
-namespace SmartSchool.API.Helpers
+namespace SmartSchool.API.V1.Profiles
 {
     public class SmartSchoolProfile : Profile
     {

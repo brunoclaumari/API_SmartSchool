@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SmartSchool.API.Data;
-using SmartSchool.API.DTOS;
-using SmartSchool.API.Helpers;
+using SmartSchool.API.V1.DTOS;
 using SmartSchool.API.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V1.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Controller da entidade Aluno versão 1.0
+    /// </summary>
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {        
 
@@ -25,12 +22,21 @@ namespace SmartSchool.API.Controllers
         private readonly IRepository _repo;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
         public AlunoController(IRepository repo, IMapper mapper)
         {            
             _repo = repo;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Método que retorna todos os Alunos
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<AlunoController>
         [HttpGet]
         public IActionResult Get()
@@ -42,12 +48,21 @@ namespace SmartSchool.API.Controllers
             return Ok(enumerableRetorno);
         }
 
+        /// <summary>
+        /// Retorna um "AlunoRegistrarDTO" para testar JSON
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("teste")]
         public IActionResult GetTeste()
         {   
             return Ok(new AlunoRegistrarDTO());
         }
 
+        /// <summary>
+        /// Método que retorna Aluno por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET api/<AlunoController>/5
         [HttpGet("byId/{id}")]
         public IActionResult GetById(int id)
@@ -63,6 +78,11 @@ namespace SmartSchool.API.Controllers
         }
         
 
+        /// <summary>
+        /// Método para cadastrar um novo Aluno
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST api/<AlunoController>
         [HttpPost]
         public IActionResult Post([FromBody] AlunoRegistrarDTO model)
@@ -76,6 +96,12 @@ namespace SmartSchool.API.Controllers
                 return BadRequest("Falha ao salvar Aluno.");
         }
 
+        /// <summary>
+        /// Método que atualiza um Aluno (obrigatório todos os atributos de Aluno)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // PUT api/<AlunoController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] AlunoRegistrarDTO model)
@@ -93,6 +119,12 @@ namespace SmartSchool.API.Controllers
                 return BadRequest($"Falha na atualização do Aluno id: {id}");
         }
 
+        /// <summary>
+        /// Método que atualiza um Aluno (não precisa de todos os atributos de Aluno)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // PATCH api/<AlunoController>/5
         [HttpPatch("{id}")]
         public IActionResult Patch(int id, [FromBody] AlunoRegistrarDTO model)
@@ -110,6 +142,11 @@ namespace SmartSchool.API.Controllers
                 return BadRequest($"Falha na atualização do Aluno id: {id}");
         }
 
+        /// <summary>
+        /// Deleta um Aluno pelo 'id'
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE api/<AlunoController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

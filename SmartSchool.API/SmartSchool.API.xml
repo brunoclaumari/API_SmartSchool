@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartSchool.API</name>
+    </assembly>
+    <members>
+        <member name="M:SmartSchool.API.Helpers.DateTimeExtensions.GetIdadeAtual(System.DateTime)">
+            <summary>
+            Método tipo Extension methods para datetime. Retorna a idade
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.Startup">
+            <summary>
+            Inicializa configurações gerais da aplicação
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:SmartSchool.API.Startup.Configuration">
+            <summary>
+            Interface de injeção de dependência em toda aplicação.
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Este método é chamado em tempo de execução. Use este método para adicionar serviços ao container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:SmartSchool.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Este método é chamado em tempo de execução. Use este método para configurar um pipeline de requisições HTTP.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="apiProviderDescription"></param>
+        </member>
+        <member name="T:SmartSchool.API.V1.Controllers.AlunoController">
+            <summary>
+            Controller da entidade Aluno versão 1.0
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Get">
+            <summary>
+            Método que retorna todos os Alunos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.GetTeste">
+            <summary>
+            Retorna um "AlunoRegistrarDTO" para testar JSON
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.GetById(System.Int32)">
+            <summary>
+            Método que retorna Aluno por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Post(SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+            <summary>
+            Método para cadastrar um novo Aluno
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Put(System.Int32,SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+            <summary>
+            Método que atualiza um Aluno (obrigatório todos os atributos de Aluno)
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Patch(System.Int32,SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+            <summary>
+            Método que atualiza um Aluno (não precisa de todos os atributos de Aluno)
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Delete(System.Int32)">
+            <summary>
+            Deleta um Aluno pelo 'id'
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.V1.Controllers.ProfessorController">
+            <summary>
+            Controller para entidade Professor versão 1.0
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.GetTeste">
+            <summary>
+            Retorna ProfessorRegistrarDTO apenas para teste
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Get">
+            <summary>
+            Método que retorna todos os Professores
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.GetById(System.Int32)">
+            <summary>
+            Método que retorna um Professor por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Post(SmartSchool.API.V1.DTOS.ProfessorRegistrarDTO)">
+            <summary>
+            Método para cadastrar um novo Professor
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Put(System.Int32,SmartSchool.API.V1.DTOS.ProfessorRegistrarDTO)">
+            <summary>
+            Método que atualiza um Professor (obrigatório todos os atributos de Professor)
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Patch(System.Int32,SmartSchool.API.V1.DTOS.ProfessorRegistrarDTO)">
+            <summary>
+            Método que atualiza um Professor (não precisa de todos os atributos de Professor)
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Delete(System.Int32)">
+            <summary>
+            Deleta um Professor pelo id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO">
+            <summary>
+            DTO de Aluno para registro (atributos passados no body)
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Id">
+            <summary>
+            Identificador e chave do banco
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Matricula">
+            <summary>
+            Número da matrícula do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Nome">
+            <summary>
+            Nome do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Sobrenome">
+            <summary>
+            Sobre nome do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Telefone">
+            <summary>
+            Telefone do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.DataNasc">
+            <summary>
+            Data de nascimento do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.DataIni">
+            <summary>
+            Data de início de cadastro do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.DataFim">
+            <summary>
+            Data do encerramento do cadastro do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V1.DTOS.AlunoRegistrarDTO.Ativo">
+            <summary>
+            Flag de status do aluno
+            </summary>
+        </member>
+        <member name="T:SmartSchool.API.V2.Controllers.AlunoController">
+            <summary>
+            Controller da entidade Aluno versão 2.0
+            </summary>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.#ctor(SmartSchool.API.Data.IRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.Get">
+            <summary>
+            Método que retorna todos os Alunos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.GetById(System.Int32)">
+            <summary>
+            Método que retorna Aluno por id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.Post(SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+            <summary>
+            Método para cadastrar um novo Aluno
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.Put(System.Int32,SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+            <summary>
+            Método que atualiza um Aluno (obrigatório todos os atributos de Aluno)
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V2.Controllers.AlunoController.Delete(System.Int32)">
+            <summary>
+            Deleta um Aluno pelo 'id'
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO">
+            <summary>
+            DTO de Aluno para registro (atributos passados no body)
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Id">
+            <summary>
+            Identificador e chave do banco
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Matricula">
+            <summary>
+            Número da matrícula do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Nome">
+            <summary>
+            Nome do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Sobrenome">
+            <summary>
+            Sobre nome do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Telefone">
+            <summary>
+            Telefone do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.DataNasc">
+            <summary>
+            Data de nascimento do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.DataIni">
+            <summary>
+            Data de início de cadastro do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.DataFim">
+            <summary>
+            Data do encerramento do cadastro do aluno
+            </summary>
+        </member>
+        <member name="P:SmartSchool.API.V2.DTOS.AlunoRegistrarDTO.Ativo">
+            <summary>
+            Flag de status do aluno
+            </summary>
+        </member>
+    </members>
+</doc>
