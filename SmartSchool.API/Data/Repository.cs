@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartSchool.API.Helpers;
 using SmartSchool.API.Models;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,48 @@ namespace SmartSchool.API.Data
         public bool SaveChanges()
         {
             return _context.SaveChanges() > 0;
+        }
+
+        public async Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool incluirProfessor = false)
+        {
+            IQueryable<Aluno> query = _context.Alunos;
+            if (incluirProfessor)
+            {
+                //"Include" e "ThenInclude" equivalem a fazer Inner joins nas tabelas
+                query = query.Include(a => a.AlunosDisciplinas)
+                             .ThenInclude(ad => ad.Disciplina)
+                             .ThenInclude(d => d.Professor)
+                             ;
+            }
+
+            query = query.AsNoTracking().OrderBy(a => a.Id);
+
+            bool? ativo = ObtemInteiroBooleanoAtivo(pageParams.Ativo);
+
+            query = query
+                .Where(a => string.IsNullOrEmpty(pageParams.Nome) 
+                || (a.Nome.ToUpper().Contains(pageParams.Nome.ToUpper()) || a.Sobrenome.ToUpper().Contains(pageParams.Nome.ToUpper()))
+                )
+                .Where(a=> pageParams.Matricula == null || a.Matricula == pageParams.Matricula)
+                .Where(a=> ativo == null || a.Ativo == ativo)                
+                ;
+
+            //return await query.ToListAsync();
+            return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
+        }
+
+        private bool? ObtemInteiroBooleanoAtivo(int? ativo)
+        {
+            bool retorno;
+            if (bool.TryParse(ativo.ToString(), out retorno))
+                return null;
+
+            if (ativo == 0)
+                return false;
+            else if (ativo == 1)
+                return true;
+            else
+                return null;
         }
 
         public List<Aluno> GetAllAlunos(bool incluirProfessor = false)
