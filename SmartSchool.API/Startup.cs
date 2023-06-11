@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 namespace SmartSchool.API
 {
     /// <summary>
-    /// Inicializa configurações gerais da aplicação
+    /// Inicializa configuraï¿½ï¿½es gerais da aplicaï¿½ï¿½o
     /// </summary>
     public class Startup
     {
@@ -36,19 +36,19 @@ namespace SmartSchool.API
         }
 
         /// <summary>
-        /// Interface de injeção de dependência em toda aplicação.
+        /// Interface de injeï¿½ï¿½o de dependï¿½ncia em toda aplicaï¿½ï¿½o.
         /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// Este método é chamado em tempo de execução. Use este método para adicionar serviços ao container.
+        /// Este mï¿½todo ï¿½ chamado em tempo de execuï¿½ï¿½o. Use este mï¿½todo para adicionar serviï¿½os ao container.
         /// </summary>
         /// <param name="services"></param>
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SmartContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+                context => context.UseMySql(Configuration.GetConnectionString("MySqlConnection"))
             );
 
 
@@ -62,7 +62,7 @@ namespace SmartSchool.API
 
             services.AddScoped<IRepository, Repository>();
 
-            //Abaixo configurações para versionamento da API
+            //Abaixo configuraï¿½ï¿½es para versionamento da API
             services.AddVersionedApiExplorer(opt =>
             {
                 opt.GroupNameFormat = "'v'VVV";
@@ -113,7 +113,7 @@ namespace SmartSchool.API
         }
 
         /// <summary>
-        /// Este método é chamado em tempo de execução. Use este método para configurar um pipeline de requisições HTTP.
+        /// Este mï¿½todo ï¿½ chamado em tempo de execuï¿½ï¿½o. Use este mï¿½todo para configurar um pipeline de requisiï¿½ï¿½es HTTP.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
