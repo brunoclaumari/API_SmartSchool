@@ -1,0 +1,22 @@
+
+**Para o estilo da página estou usando o .SCSS
+
+- Instalar o bootstrap
+	npm i bootstrap@5.3.0 >> Ajustar o import no 'styles.scss'
+
+- Instalar o jquery também. Algumas coisas do navbar dependem dele
+	npm install jquery --save
+
+- Instalar o ngx-bootstrap
+	npm install ngx-bootstrap --save
+
+- Instalar o Spinner (tipo um loading)
+	npm i ngx-spinner --save
+	npm install ngx-spinner@15.0.1 --save
+
+- Instalar o Toastr (popups com estilo)
+	npm i ngx-toastr
+	npm i ngx-toastr@16.2.0 --save (tem que ser esse para o Angular 15)
+
+
+

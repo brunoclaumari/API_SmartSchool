@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+//<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+//@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+#toast-container > div {
+  opacity: 1;
+}
