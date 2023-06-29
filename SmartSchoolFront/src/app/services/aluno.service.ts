@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Aluno } from '../models/Aluno';
 
 import { environment } from 'src/environment/environment';
-import { PaginatedResult } from '../models/Pagination';
+import { PaginatedResult, Pagination } from '../models/Pagination';
 import { map, repeat } from 'rxjs/operators';
 
 @Injectable({
@@ -31,9 +31,11 @@ export class AlunoService {
     return this.http.get<Aluno[]>(this.baseURL, { observe: 'response', params })
       .pipe(
         map(response => {
-          paginatedResult.result = response.body??[];
+          paginatedResult.result = response.body as Aluno[];
+          console.log(response.headers);
           if (response.headers.get('Pagination') != null) {
             paginatedResult.pagination = JSON.parse(response.headers.get('Pagination')??'');
+
           }
           return paginatedResult;
         })

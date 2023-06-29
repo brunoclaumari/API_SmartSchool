@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+
 import { Component, OnInit, OnDestroy, TemplateRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -30,7 +30,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   public titulo = 'Alunos';
   public alunoSelecionado: Aluno;
   public profsAlunos: Professor[];
-  public alunos: Aluno[] = [];
+  public alunos?: Aluno[] = [];
   public aluno: Aluno;
   public modeSave: String = 'post';
   public modeSaveTeste: EnumHttpMethod = EnumHttpMethod.POST;
@@ -57,7 +57,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.pagination = { currentPage: 1, itemsPerPage: 4 } as Pagination;
+    this.pagination = { currentPage: 1, itemsPerPage: 4} as Pagination;
     this.carregarAlunos();
   }
 
@@ -145,25 +145,25 @@ export class AlunosComponent implements OnInit, OnDestroy {
     }
   }
 
-  carregarAlunos(): void {
+  carregarAlunos(carregaToastr:boolean = true): void {
     const alunoId: string | null = this.route.snapshot.paramMap.get('id');
 
-    console.log(this.pagination);
+    //console.log(this.pagination);
     this.spinner.show();
     this.alunoService.getAll(this.pagination.currentPage, this.pagination.itemsPerPage)
       .pipe(takeUntil(this.unsubscriber))
       .subscribe({
         next: (alunos: PaginatedResult<Aluno[]>) => {
           this.alunos = alunos.result;
-          this.pagination = alunos.pagination;
+          this.pagination = alunos.pagination as Pagination;
 
           if(alunoId != null ){
             if (Number.parseInt(alunoId) > 0) {
               this.alunoSelect(Number.parseInt(alunoId));
             }
           }
-
-          this.toastr.success('Alunos foram carregado com Sucesso!');
+          if(carregaToastr)
+            this.toastr.success('Alunos foram carregado com Sucesso!');
         },
         error: (error: any) => {
           this.toastr.error('Alunos não carregados!');
@@ -178,6 +178,13 @@ export class AlunosComponent implements OnInit, OnDestroy {
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page;
     this.carregarAlunos();
+  }
+
+  incrementNumberPerPage(event: any): void{
+    //console.log(event);
+    //this.pagination.itemsPerPage = event;
+
+    this.carregarAlunos(false);
   }
 
   alunoSelect(alunoId: number): void {

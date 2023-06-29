@@ -1,3 +1,4 @@
+import { Pagination } from 'src/app/models/Pagination';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +14,9 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ProfessoresComponent } from './components/professores/professores.component';
 import { NavComponent } from './components/shared/nav/nav.component';
 import { TituloComponent } from './components/shared/titulo/titulo.component';
+
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+//import {MatPaginatorModule} from '@angular/';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TesteeComponent } from './testee/testee.component'
@@ -46,6 +50,7 @@ import { AlunosProfessoresComponent } from './components/professores/alunos-prof
     BrowserAnimationsModule,
     NgxSpinnerModule,
     BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
     ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3500,
