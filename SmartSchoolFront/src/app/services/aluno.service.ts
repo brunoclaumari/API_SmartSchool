@@ -41,7 +41,7 @@ export class AlunoService {
   }
 
   getById(id: number): Observable<Aluno> {
-    return this.http.get<Aluno>(`${this.baseURL}/${id}`);
+    return this.http.get<Aluno>(`${this.baseURL}/byId/${id}`);
   }
 
   getByDisciplinaId(id: number): Observable<Aluno[]> {
@@ -49,28 +49,45 @@ export class AlunoService {
   }
 
   post(aluno: Aluno) {
+    console.log("post");
     return this.http.post(this.baseURL, aluno);
   }
 
   save(aluno :Aluno, modeSave: String ){
-    if(modeSave === 'post'){
-      return this.post(aluno);
+
+/*     switch(modeSave){
+      case 'put':
+        return this.put(aluno);
+      case 'patch':
+        return this.patch(aluno);
+      default:
+        return this.post(aluno);
+    } */
+    console.log(modeSave);
+    if(modeSave === 'put'){
+      return this.put(aluno);
+    }
+    else if(modeSave === 'patch'){
+      return this.patch(aluno);
     }
     else{
-      return this.put(aluno);
+      return this.post(aluno);
     }
 
   }
 
   put(aluno: Aluno) {
+    console.log("put");
     return this.http.put(`${this.baseURL}/${aluno.id}`, aluno);
   }
 
   trocarEstado(alunoId: number, ativo: boolean) {
     return this.http.patch(`${this.baseURL}/${alunoId}/trocarEstado`, { Estado: ativo });
+    //return this.http.patch(`${this.baseURL}/${alunoId}/trocarEstado`, ativo);
   }
 
   patch(aluno: Aluno) {
+    console.log("patch");
     return this.http.patch(`${this.baseURL}/${aluno.id}`, aluno);
   }
 

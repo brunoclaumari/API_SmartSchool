@@ -14,8 +14,5 @@ namespace SmartSchool.API.V1.DTOS
         public int Idade { get; set; }//data atual - data de nascimento aluno
         public DateTime DataIni { get; set; }        
         public bool Ativo { get; set; }
-        
-
-
     }
 }

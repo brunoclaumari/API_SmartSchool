@@ -13,12 +13,16 @@ export class ProfessorService {
 
   constructor(private http: HttpClient) { }
 
+  trocarEstado(professorId: number, ativo: boolean) {
+    return this.http.patch(`${this.baseURL}/${professorId}/trocarEstado`, { Estado: ativo });
+  }
+
   getAll(): Observable<Professor[]> {
     return this.http.get<Professor[]>(this.baseURL);
   }
 
   getById(id: number): Observable<Professor> {
-    return this.http.get<Professor>(`${this.baseURL}/${id}`);
+    return this.http.get<Professor>(`${this.baseURL}/byId/${id}`);
   }
 
   getByAlunoId(id: number): Observable<Professor[]> {

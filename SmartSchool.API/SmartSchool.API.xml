@@ -13,7 +13,7 @@
         </member>
         <member name="T:SmartSchool.API.Startup">
             <summary>
-            Inicializa configurações gerais da aplicação
+            Inicializa configura��es gerais da aplica��o
             </summary>
         </member>
         <member name="M:SmartSchool.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
@@ -24,18 +24,18 @@
         </member>
         <member name="P:SmartSchool.API.Startup.Configuration">
             <summary>
-            Interface de injeção de dependência em toda aplicação.
+            Interface de inje��o de depend�ncia em toda aplica��o.
             </summary>
         </member>
         <member name="M:SmartSchool.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Este método é chamado em tempo de execução. Use este método para adicionar serviços ao container.
+            Este m�todo � chamado em tempo de execu��o. Use este m�todo para adicionar servi�os ao container.
             </summary>
             <param name="services"></param>
         </member>
         <member name="M:SmartSchool.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
             <summary>
-            Este método é chamado em tempo de execução. Use este método para configurar um pipeline de requisições HTTP.
+            Este m�todo � chamado em tempo de execu��o. Use este m�todo para configurar um pipeline de requisi��es HTTP.
             </summary>
             <param name="app"></param>
             <param name="env"></param>
@@ -72,6 +72,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.GetByDisciplina(System.Int32)">
+            <summary>
+            Retorna lista de Alunos pelo id da disciplina
+            </summary>
+            <param name="disciplinaId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Post(SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
             <summary>
             Método para cadastrar um novo Aluno
@@ -87,12 +94,20 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Patch(System.Int32,SmartSchool.API.V1.DTOS.AlunoRegistrarDTO)">
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Patch(System.Int32,SmartSchool.API.V1.DTOS.AlunoPatchDTO)">
             <summary>
             Método que atualiza um Aluno (não precisa de todos os atributos de Aluno)
             </summary>
             <param name="id"></param>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.TrocarEstado(System.Int32,SmartSchool.API.V1.DTOS.TrocaEstadoDTO)">
+            <summary>
+            Troca estado de um aluno buscando por Id
+            </summary>
+            <param name="id"></param>
+            <param name="trocaEstadoDTO"></param>
             <returns></returns>
         </member>
         <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Delete(System.Int32)">
@@ -133,6 +148,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.GetProfessoresByAlunoId(System.Int32)">
+            <summary>
+            Retorna lista de professores buscando pelo id do aluno
+            </summary>
+            <param name="alunoId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Post(SmartSchool.API.V1.DTOS.ProfessorRegistrarDTO)">
             <summary>
             Método para cadastrar um novo Professor
@@ -154,6 +176,14 @@
             </summary>
             <param name="id"></param>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.TrocarEstado(System.Int32,SmartSchool.API.V1.DTOS.TrocaEstadoDTO)">
+            <summary>
+            Troca estado de um professor buscando por Id
+            </summary>
+            <param name="id"></param>
+            <param name="trocaEstadoDTO"></param>
             <returns></returns>
         </member>
         <member name="M:SmartSchool.API.V1.Controllers.ProfessorController.Delete(System.Int32)">

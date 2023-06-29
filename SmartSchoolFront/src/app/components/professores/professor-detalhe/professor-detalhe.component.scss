@@ -1,0 +1,10 @@
+.header-profs{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: auto;
+  border-style: dashed;
+  border-width: 1px;
+  margin-bottom: 10px;
+}

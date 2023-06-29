@@ -32,7 +32,10 @@
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/ngx-toastr/toastr.css",
-              "./src/styles.scss"
+              "./src/styles.scss",
+              "./node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "./node_modules/ngx-spinner/animations/pacman.css",
+              "./node_modules/ngx-spinner/animations/ball-climbing-dot.css"
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.js",

@@ -68,11 +68,26 @@ namespace SmartSchool.API.V1.Controllers
         [HttpGet("byId/{id}")]
         public IActionResult GetById(int id)
         {
-            Professor prof = _repo.GetProfessorById(id);
+            Professor prof = _repo.GetProfessorById(id, true);
 
             if (prof is null) return BadRequest($"Professor id = {id} não encontrado!!");
 
             return Ok(_mapper.Map<ProfessorDTO>(prof));
+        }
+
+        /// <summary>
+        /// Retorna lista de professores buscando pelo id do aluno
+        /// </summary>
+        /// <param name="alunoId"></param>
+        /// <returns></returns>
+        [HttpGet("byAluno/{alunoId}")]
+        public IActionResult GetProfessoresByAlunoId(int alunoId)
+        {
+            List<Professor> profs = _repo.GetProfessoresByAlunoId(alunoId, true);
+
+            if (profs is null) return BadRequest($"Professor não encontrados!!");
+
+            return Ok(_mapper.Map<IEnumerable<ProfessorDTO>>(profs));
         }
 
         //[HttpGet("byName")]
@@ -144,6 +159,31 @@ namespace SmartSchool.API.V1.Controllers
                 return Ok(_mapper.Map<ProfessorDTO>(model));
             else
                 return BadRequest("Ocorreu um erro ao atualizar o Professor");
+        }
+
+        /// <summary>
+        /// Troca estado de um professor buscando por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trocaEstadoDTO"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/trocarEstado")]
+        public IActionResult TrocarEstado(int id, [FromBody] TrocaEstadoDTO trocaEstadoDTO)
+        {            
+            Professor professor = _repo.GetProfessorById(id);
+
+            if (professor is null) return BadRequest($"Aluno id = {id} não encontrado!!");
+            professor.Ativo = trocaEstadoDTO.Estado;
+            
+            _repo.Update(professor);
+
+            if (_repo.SaveChanges()){
+                string msg = professor.Ativo? "ativado" : "desativado";
+            //return Ok(_mapper.Map<AlunoPatchDTO>(aluno));
+                return Ok(new {message = $"Professor {msg} com sucesso!!"});
+            }
+            else
+                return BadRequest($"Falha na atualização do professor id: {id}");
         }
 
         /// <summary>

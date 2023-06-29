@@ -4,6 +4,7 @@ using SmartSchool.API.Data;
 using SmartSchool.API.V1.DTOS;
 using SmartSchool.API.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -55,11 +56,10 @@ namespace SmartSchool.API.V2.Controllers
         /// <returns></returns>
         // GET api/<AlunoController>/5
         [HttpGet("byId/{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-
             //Aluno aluno = _smartContext.Alunos.FirstOrDefault(x => x.Id == id);
-            Aluno aluno = _repo.GetAlunoById(id, true);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id, true);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
             var alunoDTO = _mapper.Map<AlunoDTO>(aluno);
@@ -94,9 +94,9 @@ namespace SmartSchool.API.V2.Controllers
         /// <returns></returns>
         // PUT api/<AlunoController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AlunoRegistrarDTO model)
+        public async Task<IActionResult> Put(int id, [FromBody] AlunoRegistrarDTO model)
         {            
-            Aluno aluno = _repo.GetAlunoById(id);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
             //value.Id = aluno.Id;
@@ -116,10 +116,10 @@ namespace SmartSchool.API.V2.Controllers
         /// <returns></returns>
         // DELETE api/<AlunoController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //Aluno aluno = _smartContext.Alunos.FirstOrDefault(x => x.Id == id);
-            Aluno aluno = _repo.GetAlunoById(id);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
 
             _repo.Delete(aluno);

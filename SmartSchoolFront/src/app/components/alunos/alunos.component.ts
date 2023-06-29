@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { Component, OnInit, OnDestroy, TemplateRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -14,12 +15,7 @@ import { Professor } from '../../models/Professor';
 import { AlunoService } from '../../services/aluno.service';
 import { ProfessorService } from '../../services/professor.service';
 import { Location } from '@angular/common';
-
-interface ModeSave {
-  modeSave: string,
-  qualquerCoisa: string
-
-}
+import { EnumHttpMethod } from 'src/app/util/enumHttpMethod';
 
 @Component({
   selector: 'app-alunos',
@@ -33,11 +29,12 @@ export class AlunosComponent implements OnInit, OnDestroy {
   public alunoForm: FormGroup;
   public titulo = 'Alunos';
   public alunoSelecionado: Aluno;
-  public textSimple: string;
   public profsAlunos: Professor[];
-  public alunos: Aluno[];
+  public alunos: Aluno[] = [];
   public aluno: Aluno;
-  public modeSave: string = 'post';
+  public modeSave: String = 'post';
+  public modeSaveTeste: EnumHttpMethod = EnumHttpMethod.POST;
+
   /* public modeSave: ModeSave = {
     requisicao: 'post'
   } ; */
@@ -84,20 +81,6 @@ export class AlunosComponent implements OnInit, OnDestroy {
 
   }
 
-
-/*     this.professorService.getByAlunoId(id)
-      .pipe(takeUntil(this.unsubscriber))
-      .subscribe((professores: Professor[]): void => {
-        this.profsAlunos = professores;
-        this.modalRef = this.modalService.show(template);
-      }, (error: any) => {
-        this.toastr.error(`erro: ${error.message}`);
-        console.error(error.message);
-        this.spinner.hide();
-      }, () => this.spinner.hide()
-    ); */
-  //}
-
   criarForm(): void {
     this.alunoForm = this.fb.group({
       id: [0],
@@ -109,13 +92,15 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   trocarEstado(aluno: Aluno) {
-    this.alunoService.trocarEstado(aluno.id, !aluno.ativo)
+    aluno.ativo = !aluno.ativo;
+    console.log(aluno.ativo);
+    this.alunoService.trocarEstado(aluno.id, aluno.ativo)
       .pipe(takeUntil(this.unsubscriber))
       .subscribe({
-        next: (resp) => {
-          console.log(resp);
-          this.carregarAlunos();
-          this.toastr.success('Aluno salvo com sucesso!');
+        next: (resp:any) => {
+          console.log(`resposta: ${resp.message}`);
+          this.toastr.success(resp.message);
+
         },
         error: (error: any) => {
           this.toastr.error(`Erro: Aluno não pode ser salvo!`);
@@ -131,34 +116,22 @@ export class AlunosComponent implements OnInit, OnDestroy {
     if (this.alunoForm.valid) {
       this.spinner.show();
 
-      if (this.modeSave === 'post') {
+      //if (this.modeSave === 'post') {
+      if (this.modeSaveTeste === EnumHttpMethod.POST) {
         this.aluno = {...this.alunoForm.value};
       } else {
         this.aluno = {id: this.alunoSelecionado.id, ...this.alunoForm.value};
       }
 
-      this.alunoService.save(this.aluno, this.modeSave)
-      .pipe(takeUntil(this.unsubscriber))
-      .subscribe({
-        next: () => {
-          this.carregarAlunos();
-          this.toastr.success('Aluno salvo com sucesso!');
-        },
-        error:(error: any) => {
-          this.toastr.error(`Erro: Aluno não pode ser salvo!`);
-          console.error(error);
-          this.spinner.hide();
-        },
-        complete: () => this.spinner.hide()
-      }
-    );
 
-
-/*       this.alunoService[this.modeSave](this.aluno)
+      //this.alunoService.save(this.aluno, this.modeSave)
+      this.alunoService[this.modeSaveTeste](this.aluno)
         .pipe(takeUntil(this.unsubscriber))
-        .subscribe({
+        .subscribe(
+          {
           next: () => {
-            this.carregarAlunos();
+            //this.carregarAlunos();
+            this.ngOnInit();
             this.toastr.success('Aluno salvo com sucesso!');
           },
           error:(error: any) => {
@@ -168,14 +141,14 @@ export class AlunosComponent implements OnInit, OnDestroy {
           },
           complete: () => this.spinner.hide()
         }
-      ); */
-
+      );
     }
   }
 
   carregarAlunos(): void {
     const alunoId: string | null = this.route.snapshot.paramMap.get('id');
 
+    console.log(this.pagination);
     this.spinner.show();
     this.alunoService.getAll(this.pagination.currentPage, this.pagination.itemsPerPage)
       .pipe(takeUntil(this.unsubscriber))
@@ -208,7 +181,9 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   alunoSelect(alunoId: number): void {
-    this.modeSave = 'patch';
+    //this.modeSave = 'patch';
+    this.modeSaveTeste = EnumHttpMethod.PATCH;
+
     this.alunoService.getById(alunoId).subscribe(
       {
         next:(alunoReturn) => {
@@ -226,7 +201,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   voltar(): void {
-    //this.alunoSelecionado = null;
+    //this.alunoSelecionado = [];
     this.location.back();
   }
 
@@ -239,7 +214,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscriber.next(undefined);
+    this.unsubscriber.next("");
     this.unsubscriber.complete();
   }
 

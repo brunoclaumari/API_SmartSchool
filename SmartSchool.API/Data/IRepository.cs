@@ -22,15 +22,17 @@ namespace SmartSchool.API.Data
 
         List<Aluno> GetAllAlunos(bool incluirProfessor = false);
 
-        List<Aluno> GetAllAlunosByDisciplinaId(int disciplinaId, bool incluirProfessor = false);
+        Task<List<Aluno>> GetAllAlunosByDisciplinaId(int disciplinaId, bool incluirProfessor = false);
 
-        Aluno GetAlunoById(int alunoId, bool incluirProfessor = false);        
+        Task<Aluno> GetAlunoByIdAsync(int alunoId, bool incluirProfessor = false);        
 
         List<Professor> GetAllProfessores(bool incluirAluno = false);
 
         Professor GetProfessorById(int professorId, bool incluirAluno = false);
 
         List<Professor> GetProfessoresByDisciplinaId(int disciplinaId, bool incluirAluno = false);
+
+        List<Professor> GetProfessoresByAlunoId(int alunoId, bool incluirAlunoEDiscplina = false);
 
 
 

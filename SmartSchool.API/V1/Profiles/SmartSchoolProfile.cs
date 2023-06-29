@@ -32,6 +32,7 @@ namespace SmartSchool.API.V1.Profiles
 
             CreateMap<AlunoDTO, Aluno>();
             CreateMap<Aluno, AlunoRegistrarDTO>().ReverseMap();
+            CreateMap<Aluno, AlunoPatchDTO>().ReverseMap();
             #endregion
 
             #region Map Professor
@@ -42,6 +43,9 @@ namespace SmartSchool.API.V1.Profiles
 
             CreateMap<ProfessorDTO, Professor>();
             CreateMap<Professor, ProfessorRegistrarDTO>().ReverseMap();
+
+            CreateMap<CursoDTO, Curso>().ReverseMap();
+            CreateMap<DisciplinaDTO, Disciplina>().ReverseMap();
 
             #endregion
 

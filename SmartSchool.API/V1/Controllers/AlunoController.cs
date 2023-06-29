@@ -69,16 +69,34 @@ namespace SmartSchool.API.V1.Controllers
         /// <returns></returns>
         // GET api/<AlunoController>/5
         [HttpGet("byId/{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
 
             //Aluno aluno = _smartContext.Alunos.FirstOrDefault(x => x.Id == id);
-            Aluno aluno = _repo.GetAlunoById(id, true);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id, true);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
-            var alunoDTO = _mapper.Map<AlunoDTO>(aluno);
+            var alunoDTO = _mapper.Map<AlunoRegistrarDTO>(aluno);
 
             return Ok(alunoDTO);
+        }
+
+        /// <summary>
+        /// Retorna lista de Alunos pelo id da disciplina
+        /// </summary>
+        /// <param name="disciplinaId"></param>
+        /// <returns></returns>
+        [HttpGet("byDisciplina/{disciplinaId}")]
+        public async Task<IActionResult> GetByDisciplina(int disciplinaId)
+        {
+
+            //Aluno aluno = _smartContext.Alunos.FirstOrDefault(x => x.Id == id);
+            IEnumerable<Aluno> alunos =  await _repo.GetAllAlunosByDisciplinaId(disciplinaId, true);
+
+            if (alunos is null) return BadRequest($"Aluno pela disciplina id = {disciplinaId} não encontrado!!");
+            var alunosDTO = _mapper.Map<IEnumerable<AlunoRegistrarDTO>>(alunos);
+
+            return Ok(alunosDTO);
         }
         
 
@@ -108,9 +126,9 @@ namespace SmartSchool.API.V1.Controllers
         /// <returns></returns>
         // PUT api/<AlunoController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AlunoRegistrarDTO model)
+        public async Task<IActionResult> Put(int id, [FromBody] AlunoRegistrarDTO model)
         {            
-            Aluno aluno = _repo.GetAlunoById(id);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
             //value.Id = aluno.Id;
@@ -131,9 +149,9 @@ namespace SmartSchool.API.V1.Controllers
         /// <returns></returns>
         // PATCH api/<AlunoController>/5
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, [FromBody] AlunoRegistrarDTO model)
+        public async Task<IActionResult> Patch(int id, [FromBody] AlunoPatchDTO model)
         {            
-            Aluno aluno = _repo.GetAlunoById(id);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
 
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
             //value.Id = aluno.Id;
@@ -141,7 +159,32 @@ namespace SmartSchool.API.V1.Controllers
             _repo.Update(aluno);
 
             if (_repo.SaveChanges())
-                return Ok(_mapper.Map<AlunoDTO>(aluno));
+                return Ok(_mapper.Map<AlunoPatchDTO>(aluno));
+            else
+                return BadRequest($"Falha na atualização do Aluno id: {id}");
+        }
+
+        /// <summary>
+        /// Troca estado de um aluno buscando por Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trocaEstadoDTO"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}/trocarEstado")]
+        public async Task<IActionResult> TrocarEstado(int id, [FromBody] TrocaEstadoDTO trocaEstadoDTO)
+        {            
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
+
+            if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
+            aluno.Ativo = trocaEstadoDTO.Estado;
+            
+            _repo.Update(aluno);
+
+            if (_repo.SaveChanges()){
+                string msg = aluno.Ativo? "ativado" : "desativado";
+            //return Ok(_mapper.Map<AlunoPatchDTO>(aluno));
+                return Ok(new {message = $"Aluno {msg} com sucesso!!"});
+            }
             else
                 return BadRequest($"Falha na atualização do Aluno id: {id}");
         }
@@ -153,10 +196,10 @@ namespace SmartSchool.API.V1.Controllers
         /// <returns></returns>
         // DELETE api/<AlunoController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //Aluno aluno = _smartContext.Alunos.FirstOrDefault(x => x.Id == id);
-            Aluno aluno = _repo.GetAlunoById(id);
+            Aluno aluno = await _repo.GetAlunoByIdAsync(id);
             if (aluno is null) return BadRequest($"Aluno id = {id} não encontrado!!");
 
             _repo.Delete(aluno);

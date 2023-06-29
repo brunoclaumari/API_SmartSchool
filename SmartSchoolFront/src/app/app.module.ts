@@ -18,17 +18,24 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TesteeComponent } from './testee/testee.component'
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfessoresAlunosComponent } from './components/alunos/professores-alunos/professores-alunos.component';
+import { ProfessorDetalheComponent } from './components/professores/professor-detalhe/professor-detalhe.component';
+import { AlunosProfessoresComponent } from './components/professores/alunos-professores/alunos-professores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlunosComponent,
     ProfessoresComponent,
+    ProfessoresAlunosComponent,
+    AlunosProfessoresComponent,
     PerfilComponent,
     DashboardComponent,
     NavComponent,
     TituloComponent,
-    TesteeComponent
+    TesteeComponent,
+    ProfessoresAlunosComponent,
+    ProfessorDetalheComponent
   ],
   imports: [
     BrowserModule,
